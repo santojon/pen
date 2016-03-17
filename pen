@@ -1,0 +1,235 @@
+#!/bin/bash
+
+export here="$PWD"
+IFS='/' read -ra hereParts <<< "$here"
+partsSize="${#hereParts[@]}"
+export relativeHere="${hereParts[partsSize - 1]}"
+
+
+################
+# CLEANUP AREA #
+################
+
+function cleanapp {
+
+	# go to project root
+	cd ../
+
+	# remove all 'target' folders
+	echo "Starting cleanup..."
+	sudo find . -type d -name 'target' -exec rm -rf {} 2> /dev/null \;
+
+	# remove all 'lua' files
+	sudo find . -name '*.lua' -exec rm -rf {} 2> /dev/null \;
+
+	# remove all 'logs' folders
+	sudo find . -type d -name 'logs' -exec rm -rf {} 2> /dev/null \;
+
+	# remove nginx compiled conf files
+	sudo find . -name '*.conf.compiled' -exec rm -rf {} 2> /dev/null \;
+
+	# removing trash folders
+	sudo find . -type d -name '*Trash*' -exec rm -rf {} 2> /dev/null \;
+
+	# remove all empty folders
+	sudo find . -type d -empty -delete
+	echo "Done!"
+	clear
+}
+
+
+##############
+# BUILD AREA #
+##############
+
+function buildapp {
+
+	# verifies if you need to clean or watch app
+	for i in "$@"
+	do
+		case $i in
+			-c|--clean)
+				cleanapp
+				c="0"
+			;;
+			-w|--watch)
+				w="0"
+			;;
+		esac
+	done
+
+	if [ "$c" != "0" ]; then
+		# go to project root
+		cd ../
+	fi
+
+	# create 'target' folder
+	echo "creating folder..."
+	sudo mkdir -p target
+
+	# copy other necessary files
+	echo "Copying necessary files..."
+	sudo cp -r $relativeHere target
+
+	# go into folder
+	cd target
+
+	# build all files and watch then
+	echo "Start building..."
+	sudo find . -name '*.moon' -exec moonc {} \;
+	echo "All done!"
+
+	##########################
+	# POSTBUILD CLEANUP AREA #
+	##########################
+
+	# remove all 'moon' files
+	echo "Cleaning build up..."
+	sudo find . -name '*.moon' -exec rm -rf {} \;
+
+	# remove uneeded files
+	sudo rm -rf $relativeHere/configure
+	sudo rm -rf $relativeHere/pen
+	echo "Done."
+
+	if [ "$w" == "0" ]; then
+		# watch the app changes
+		watchapp &
+	fi
+}
+
+
+##############
+# WATCH AREA #
+##############
+
+function watchapp {
+
+	# set watcher for moon files
+	cd ../
+	moonc -w -t target $relativeHere & clear
+}
+
+
+#############
+# RUN AREA #
+#############
+
+function runapp {
+
+	# verify environment
+	e="development"
+	case $2 in
+		production)
+			e="production"
+		;;
+	esac
+
+	# run project
+	echo "Starting server..."
+	cd ../target/$relativeHere && lapis server $e & clear
+}
+
+
+#############
+# KILL AREA #
+#############
+
+function killapp {
+
+	# kill existing related processes
+	echo "Killing processes..."
+	sudo killall -r nginx
+	sudo killall -r lua
+	echo "Done."
+}
+
+
+#####################
+# 'CREATE NEW' AREA #
+#####################
+
+function newpen {
+
+	# search for '--git' option
+	for i in "$@"
+	do
+		case $i in
+			--git)
+				lapis new --git
+				g="0"
+			;;
+		esac
+	done
+
+	# if not '--git'
+	if [ "$g" != "0" ]; then
+		lapis new
+	fi
+
+	# create necessary dirs
+	sudo mkdir -p ./{models,views/layouts,controllers,i18n}
+
+	# TODO: [WIP] create MVC* structure
+}
+
+########
+# MAIN #
+########
+
+for i in "$@"
+do
+	case $i in
+		# make a cleanup
+		clean)
+			cleanapp
+		;;
+		# build app
+		build)
+			buildapp  $@
+		;;
+		# run app
+		run|server)
+			for j in "$@"
+			do
+				# verifies if is flagged to full 'dev' mode
+				case $j in
+					-d|--dev)
+						buildapp -c -w
+						runapp
+						default="0"
+					;;
+					# verifies if is flagged to full 'prod' mode
+					-p|--prod)
+						buildapp -c
+						runapp . "production"
+						default="0"
+					;;
+				esac
+			done
+
+			# otherwise... just pass the params
+			if [ "$default" != "0" ]; then
+				buildapp $@
+				runapp $@
+			fi
+		;;
+		# kill app
+		kill)
+			killapp
+			for j in "$@"
+			do
+				# clean too?
+				case $j in
+					-c|--clean)
+						cleanapp
+					;;
+				esac
+			done
+		;;
+		# create a new app
+		new)
+			newpen $@
+		;;
+	esac
+done

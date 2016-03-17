@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# verifies if is root
+if [ "$EUID" -ne "0" ]; then
+    echo "This script must be run as root." >&2
+    exit 1
+fi
+
+sudo chmod 777 pen
+sudo mkdir -p /etc/pen/
+sudo cp -r pen /etc/pen/
+export PATH=$PATH:/etc/pen
