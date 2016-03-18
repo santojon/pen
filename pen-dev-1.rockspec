@@ -2,7 +2,7 @@ package = "pen"
 version = "dev-1"
 
 source = {
-	url = "https://github.com.com/leafo/lapis.git",
+	url = "https://github.com.com/santojon/pen.git",
 	-- url = "git://gitlab.com/santojon/mindreader.git",
 }
 
@@ -14,6 +14,7 @@ description = {
 }
 
 dependencies = {
+	"moonscript",
 	"luasec",
 	"lapis",
 }
@@ -21,7 +22,7 @@ dependencies = {
 build = {
 	type = "builtin",
 	modules = {
-		["pen.application"] = "pen_base/application.lua",
+		["pen.application"] = "src/application.lua",
 		-- ["lapis.cache"] = "lapis/cache.lua",
 		-- ["lapis.cmd.actions"] = "lapis/cmd/actions.lua",
 		-- ["lapis.cmd.leda"] = "lapis/cmd/leda.lua",
