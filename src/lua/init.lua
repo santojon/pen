@@ -3,9 +3,6 @@ local lapisApp = require("lapis.application")
 local App
 App = application.App
 local app_cache = lapisApp.app_cache
-setmetatable(app_cache, {
-  __mode = "k"
-})
 local serve
 do
   local _base_0 = lapisApp
