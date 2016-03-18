@@ -2,12 +2,11 @@ package = "pen"
 version = "dev-1"
 
 source = {
-	url = "https://github.com.com/santojon/pen.git",
-	-- url = "git://gitlab.com/santojon/mindreader.git",
+	url = "git://github.com/santojon/pen.git",
 }
 
 description = {
-	summary = "Am override for lapis framework for only Moonscript applications",
+	summary = "An override for lapis framework for only Moonscript applications",
 	homepage = "...",
 	maintainer = "Jonathan Santos <santojon5@gmail.com>",
 	license = "MIT",
@@ -15,14 +14,13 @@ description = {
 
 dependencies = {
 	"moonscript",
-	"luasec",
 	"lapis",
 }
 
 build = {
 	type = "builtin",
 	modules = {
-		["pen.application"] = "src/application.lua",
+		["pen.application"] = "src/lua/application.lua",
 		-- ["lapis.cache"] = "lapis/cache.lua",
 		-- ["lapis.cmd.actions"] = "lapis/cmd/actions.lua",
 		-- ["lapis.cmd.leda"] = "lapis/cmd/leda.lua",
