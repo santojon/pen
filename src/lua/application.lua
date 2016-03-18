@@ -1,5 +1,4 @@
 local lapis = require("lapis")
-local config = require("lapis.config").get()
 local App
 do
   local _class_0
