@@ -18,5 +18,3 @@ sudo cp -r pen /usr/local/bin/
 
 # export to path
 # export PATH=$PATH:/usr/local/bin/pen/
-
-echo "$PWD"
