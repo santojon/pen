@@ -11,10 +11,12 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # create dir and copy file
-sudo chmod 777 bin/pen
+sudo chmod 777 pen
 # sudo mkdir -p /usr/local/bin/pen/
-sudo cp -r bin/pen /usr/local/bin/
+sudo cp -r pen /usr/local/bin/
 # sudo chmod 777 /usr/local/bin/pen/
 
 # export to path
 # export PATH=$PATH:/usr/local/bin/pen/
+
+echo "$PWD"
