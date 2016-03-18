@@ -1,12 +1,12 @@
 application = require "pen.application"
-lapisApp = require "lapis.application"
+-- lapisApp = require "lapis.application"
 
-app_cache = lapisApp.app_cache
+-- app_cache = lapisApp.app_cache
 
-import App from application
+-- import App from application
 
-serve = lapisApp\serve
+-- serve = lapisApp\serve
 
-{
-  :serve, :application, :App, :app_cache
-}
+-- {
+--   :serve, :application, :App, :app_cache
+-- }
