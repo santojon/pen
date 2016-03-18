@@ -88,4 +88,9 @@ build = {
 		-- ["lapis.views.error"] = "lapis/views/error.lua",
 		-- ["lapis.views.layout"] = "lapis/views/layout.lua",
 	},
+	install = {
+		bin = {
+			"bin/configure",
+		}
+	},
 }
