@@ -6,13 +6,15 @@ if [ "$EUID" -ne "0" ]; then
     exit 1
 fi
 
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
 # create dir and copy file
 sudo chmod 777 pen
-sudo mkdir -p /usr/local/bin/pen/
-sudo cp -r pen /usr/local/bin/pen/
-sudo chmod 777 /usr/local/bin/pen/
+# sudo mkdir -p /usr/local/bin/pen/
+sudo cp -r pen /usr/local/bin/
+# sudo chmod 777 /usr/local/bin/pen/
 
 # export to path
-PEN_PATH=/usr/local/bin/pen/
-PATH=$PATH:$PEN_PATH
-export PATH
+# export PATH=$PATH:/usr/local/bin/pen/

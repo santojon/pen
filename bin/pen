@@ -99,6 +99,21 @@ function buildapp {
 }
 
 
+##########################
+# COMPILE PEN FILES AREA #
+##########################
+
+function compilePen {
+	case $1 in
+		-c|--clean)
+			cleanapp
+			cd $relativeHere/src/
+			moonc -t lua ./*
+		;;
+	esac
+}
+
+
 ##############
 # WATCH AREA #
 ##############
@@ -230,6 +245,10 @@ do
 		# create a new app
 		new)
 			newpen $@
+		;;
+		# compile modules
+		compile)
+			compilePen -c
 		;;
 	esac
 done
