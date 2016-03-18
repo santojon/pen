@@ -20,6 +20,7 @@ dependencies = {
 build = {
 	type = "builtin",
 	modules = {
+		["pen"] = "src/lua/init.lua",
 		["pen.application"] = "src/lua/application.lua",
 		-- ["lapis.cache"] = "lapis/cache.lua",
 		-- ["lapis.cmd.actions"] = "lapis/cmd/actions.lua",
