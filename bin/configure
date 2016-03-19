@@ -15,7 +15,7 @@ sudo chmod 777 pen
 # sudo mkdir -p /usr/local/bin/pen/
 sudo cp -r pen /usr/local/bin/
 # sudo chmod 777 /usr/local/bin/pen/
-sudo ln -sf /usr/local/share/lua/5.1/lapis /usr/local/share/lua/5.1/pen/lapis
+# sudo ln -sf /usr/share/lua/5.1/lapis /usr/share/lua/5.1/pen/lapis
 
 # export to path
 # export PATH=$PATH:/usr/local/bin/pen/

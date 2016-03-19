@@ -19,6 +19,9 @@ function cleanapp {
 	echo "Starting cleanup..."
 	sudo find . -type d -name 'target' -exec rm -rf {} 2> /dev/null \;
 
+	# remove all 'lua' folders
+	sudo find . -type d -name 'lua' -exec rm -rf {} 2> /dev/null \;
+
 	# remove all 'lua' files
 	sudo find . -name '*.lua' -exec rm -rf {} 2> /dev/null \;
 
@@ -108,7 +111,6 @@ function compilePen {
 		-c|--clean)
 			cleanapp
 			cd $relativeHere/src/
-			sudo rm -rf lua
 			moonc -t lua ./*
 		;;
 	esac

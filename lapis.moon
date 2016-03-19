@@ -1,1 +1,1 @@
-require "pen.lapis.init"
+require "lapis.init"
