@@ -1,5 +1,5 @@
 application = require "pen.application"
-lapisApp = require "lapis.application"
+lapisApp = require "pen.lapis.application"
 
 app_cache = lapisApp.app_cache
 

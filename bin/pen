@@ -108,6 +108,7 @@ function compilePen {
 		-c|--clean)
 			cleanapp
 			cd $relativeHere/src/
+			sudo rm -rf lua
 			moonc -t lua ./*
 		;;
 	esac

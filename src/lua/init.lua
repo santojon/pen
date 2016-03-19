@@ -1,5 +1,5 @@
 local application = require("pen.application")
-local lapisApp = require("lapis.application")
+local lapisApp = require("pen.lapis.application")
 local app_cache = lapisApp.app_cache
 local App
 App = application.App
