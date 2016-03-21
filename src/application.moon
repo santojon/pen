@@ -21,22 +21,22 @@ class App extends pen.Application
   layout: require "views.layouts.main"
 
   -- Define a filter to run every time a request is made
-  @before_filter =>
-    if @session.user
-      @current_user = load_user @session.user
+  @@before_filter =>
+    if @@session.user
+      @@current_user = load_user @@session.user
       generate_csrf @
 
-    if @current_user
-        @current_user\update_last_active!
-        @global_notifications = @current_user\unseen_notifications!
+    if @@current_user
+        @@current_user\update_last_active!
+        @@global_notifications = @@current_user\unseen_notifications!
 
-    if @session.flash
-      @flash = @session.flash
-      @session.flash = false
+    if @@session.flash
+      @@flash = @@session.flash
+      @@session.flash = false
 
   -- Subapplications includes (controllers)
-  if controllerNames != {}
-	@include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+  if controllerNames
+	  @@include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 
