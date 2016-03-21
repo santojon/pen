@@ -81,13 +81,13 @@ build = {
 		-- ["lapis.spec.server"] = "lapis/spec/server.lua",
 		-- ["lapis.spec.shared"] = "lapis/spec/shared.lua",
 		-- ["lapis.spec.stack"] = "lapis/spec/stack.lua",
-		-- ["lapis.util"] = "lapis/util.lua",
+		["pen.util"] = "src/lua/util.lua",
 		-- ["lapis.util.encoding"] = "lapis/util/encoding.lua",
 		-- ["lapis.util.functions"] = "lapis/util/functions.lua",
 		-- ["lapis.validate"] = "lapis/validate.lua",
 		-- ["lapis.version"] = "lapis/version.lua",
-		-- ["lapis.views.error"] = "lapis/views/error.lua",
-		-- ["lapis.views.layout"] = "lapis/views/layout.lua",
+		-- ["pen.views.error"] = "src/lua/views/error.lua",
+		["pen.views.layout"] = "src/lua/views/layout.lua",
 	},
 	install = {
 		bin = {
