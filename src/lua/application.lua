@@ -86,6 +86,13 @@ do
       self.session.flash = false
     end
   end)
+  for _index_0 = 1, #controllerNames do
+    local val = controllerNames[_index_0]
+    self:include("controllers." .. tostring(val), {
+      path = tostring(base) .. "/" .. tostring(val),
+      name = tostring(val) .. "_"
+    })
+  end
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
