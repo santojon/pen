@@ -72,24 +72,24 @@ do
   })
   _base_0.__class = _class_0
   local self = _class_0
-  self:before_filter(function(self)
-    if self.session.user then
-      self.current_user = load_user(self.session.user)
+  self.__class:before_filter(function(self)
+    if self.__class.session.user then
+      self.__class.current_user = load_user(self.__class.session.user)
       generate_csrf(self)
     end
-    if self.current_user then
-      self.current_user:update_last_active()
-      self.global_notifications = self.current_user:unseen_notifications()
+    if self.__class.current_user then
+      self.__class.current_user:update_last_active()
+      self.__class.global_notifications = self.__class.current_user:unseen_notifications()
     end
-    if self.session.flash then
-      self.flash = self.session.flash
-      self.session.flash = false
+    if self.__class.session.flash then
+      self.__class.flash = self.__class.session.flash
+      self.__class.session.flash = false
     end
   end)
-  if controllerNames ~= { } then
+  if controllerNames then
     for _index_0 = 1, #controllerNames do
       local val = controllerNames[_index_0]
-      self:include("controllers." .. tostring(val), {
+      self.__class:include("controllers." .. tostring(val), {
         path = tostring(base) .. "/" .. tostring(val),
         name = tostring(val) .. "_"
       })
