@@ -1,4 +1,5 @@
 local pen = require("pen")
+require("pen.controllers")
 local util = require("pen.util")
 local encoding = require("pen.util.encoding")
 local json = require("cjson")

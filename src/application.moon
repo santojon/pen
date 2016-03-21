@@ -1,6 +1,9 @@
 -- Needed to creat an pen app
 pen = require "pen"
 
+-- To use controllers
+require "pen.controllers"
+
 -- Other things
 util = require "pen.util"
 encoding = require "pen.util.encoding"
