@@ -10,7 +10,7 @@ json = require "cjson"
 -- SET IT into config.moon
 base = ""
 appName = "penapp"
-controllerNames = {}
+controllerNames = { "" }
 
 --
 -- Main app class
@@ -35,8 +35,7 @@ class App extends pen.Application
       @session.flash = false
 
   -- Subapplications includes (controllers)
-  if controllerNames
-	  @@include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+  @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 

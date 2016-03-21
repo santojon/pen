@@ -4,7 +4,9 @@ local encoding = require("pen.util.encoding")
 local json = require("cjson")
 local base = ""
 local appName = "penapp"
-local controllerNames = { }
+local controllerNames = {
+  ""
+}
 local App
 do
   local _class_0
@@ -86,14 +88,12 @@ do
       self.session.flash = false
     end
   end)
-  if controllerNames then
-    for _index_0 = 1, #controllerNames do
-      local val = controllerNames[_index_0]
-      self.__class:include("controllers." .. tostring(val), {
-        path = tostring(base) .. "/" .. tostring(val),
-        name = tostring(val) .. "_"
-      })
-    end
+  for _index_0 = 1, #controllerNames do
+    local val = controllerNames[_index_0]
+    self:include("controllers." .. tostring(val), {
+      path = tostring(base) .. "/" .. tostring(val),
+      name = tostring(val) .. "_"
+    })
   end
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
