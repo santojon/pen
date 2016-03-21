@@ -3,7 +3,6 @@ pen = require "pen"
 
 -- To use controllers
 require "pen.controllers"
-require "controllers"
 
 -- Other things
 util = require "pen.util"
@@ -14,7 +13,7 @@ json = require "cjson"
 -- SET IT into config.moon
 base = ""
 appName = "penapp"
-controllerNames = { "" }
+controllerNames = {}
 
 --
 -- Main app class
@@ -39,7 +38,8 @@ class App extends pen.Application
       @session.flash = false
 
   -- Subapplications includes (controllers)
-  @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+  if controllerNames
+    @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 
