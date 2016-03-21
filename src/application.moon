@@ -36,7 +36,7 @@ class App extends pen.Application
 
   -- Subapplications includes (controllers)
   if controllerNames
-	  @@include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+	  @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 
