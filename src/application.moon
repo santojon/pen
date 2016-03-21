@@ -35,8 +35,7 @@ class App extends pen.Application
       @session.flash = false
 
   -- Subapplications includes (controllers)
-  if controllerNames
-	  @include "pen.controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+	@include "pen.controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 

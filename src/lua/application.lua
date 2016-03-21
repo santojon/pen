@@ -85,8 +85,6 @@ do
       self.flash = self.session.flash
       self.session.flash = false
     end
-  end)
-  if controllerNames then
     for _index_0 = 1, #controllerNames do
       local val = controllerNames[_index_0]
       self:include("pen.controllers." .. tostring(val), {
@@ -94,7 +92,7 @@ do
         name = tostring(val) .. "_"
       })
     end
-  end
+  end)
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
