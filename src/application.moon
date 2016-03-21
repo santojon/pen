@@ -14,9 +14,6 @@ controllerNames = {}
 
 --
 -- Main app class
--- App code starts here
---
--- Defines the main routes ONLY
 --
 class App extends pen.Application
 
@@ -37,9 +34,9 @@ class App extends pen.Application
       @flash = @session.flash
       @session.flash = false
 
-  -- Subapplications includes (controllers)
-  if controllerNames
-	@include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+ --  -- Subapplications includes (controllers)
+ --  if controllerNames
+	-- @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 
