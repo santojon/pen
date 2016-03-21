@@ -1,4 +1,3 @@
-local base_app = require("pen.base.app")
 local pen = require("pen")
 local util = require("pen.util")
 local encoding = require("pen.util.encoding")
@@ -9,7 +8,6 @@ local controllerNames = { }
 local App
 do
   local _class_0
-  local respond_to, capture_errors, capture_errors_json, json_params, assert_error, yield_error
   local _parent_0 = pen.Application
   local _base_0 = {
     layout = require("views.layouts.main"),
@@ -88,24 +86,9 @@ do
       self.session.flash = false
     end
   end)
-  respond_to = base_app.respond_to
-  capture_errors = base_app.capture_errors
-  capture_errors_json = base_app.capture_errors_json
-  json_params = base_app.json_params
-  assert_error = base_app.assert_error
-  yield_error = base_app.yield_error
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
   App = _class_0
+  return _class_0
 end
-return {
-  Request = base_app.Application.Request,
-  App = App,
-  respond_to = respond_to,
-  capture_errors = capture_errors,
-  capture_errors_json = capture_errors_json,
-  json_params = json_params,
-  assert_error = assert_error,
-  yield_error = yield_error
-}
