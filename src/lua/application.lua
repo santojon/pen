@@ -86,10 +86,10 @@ do
       self.session.flash = false
     end
   end)
-  if controllerNames then
+  if controllerNames ~= { } then
     for _index_0 = 1, #controllerNames do
       local val = controllerNames[_index_0]
-      include("controllers." .. tostring(val), {
+      self:include("controllers." .. tostring(val), {
         path = tostring(base) .. "/" .. tostring(val),
         name = tostring(val) .. "_"
       })
