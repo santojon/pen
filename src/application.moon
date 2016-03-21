@@ -23,7 +23,7 @@ class App extends pen.Application
   -- Define a filter to run every time a request is made
   @before_filter =>
     if @session.user
-      @@current_user = load_user @session.user
+      @current_user = load_user @session.user
       generate_csrf @
 
     if @current_user
@@ -35,7 +35,8 @@ class App extends pen.Application
       @session.flash = false
 
   -- Subapplications includes (controllers)
-  -- @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+  if controllerNames
+	  @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 
