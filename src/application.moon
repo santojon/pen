@@ -1,9 +1,6 @@
 -- Needed to creat an pen app
 pen = require "pen"
 
--- To use controllers
-require "pen.controllers"
-
 -- Other things
 util = require "pen.util"
 encoding = require "pen.util.encoding"
@@ -38,8 +35,7 @@ class App extends pen.Application
       @session.flash = false
 
   -- Subapplications includes (controllers)
-  if controllerNames
-    @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+  @include "pen.controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 
