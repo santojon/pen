@@ -1,5 +1,10 @@
 -- Needed to creat an lapis app
-lapis = require "lapis"
+pen = require "pen"
+
+-- Other things
+util = require "pen.util"
+encoding = require "pen.util.encoding"
+json = require "cjson"
 
 -- App REQUIRED variables
 -- SET IT into config.moon
@@ -13,7 +18,7 @@ controllerNames = {}
 --
 -- Defines the main routes ONLY
 --
-class App extends lapis.Application
+class App extends pen.Application
 
   -- Define main layout for all pages
   layout: require "views.layouts.main"
@@ -42,6 +47,10 @@ class App extends lapis.Application
   --
   -- Default routes
   --
+
+  -- Homepage
+  [index: "#{base}/"]: =>
+    render: true	-- render views/index.lua
 
   -- Denied page
   [denied: "#{base}/403"]: =>

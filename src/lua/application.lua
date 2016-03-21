@@ -1,13 +1,23 @@
-local lapis = require("lapis")
+local pen = require("pen")
+local util = require("pen.util")
+local encoding = require("pen.util.encoding")
+local json = require("cjson")
 local base = ""
 local appName = "penapp"
 local controllerNames = { }
 local App
 do
   local _class_0
-  local _parent_0 = lapis.Application
+  local _parent_0 = pen.Application
   local _base_0 = {
     layout = require("views.layouts.main"),
+    [{
+      index = tostring(base) .. "/"
+    }] = function(self)
+      return {
+        render = true
+      }
+    end,
     [{
       denied = tostring(base) .. "/403"
     }] = function(self)
