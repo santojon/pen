@@ -63,6 +63,7 @@ build = {
 		-- ["lapis.flow"] = "lapis/flow.lua",
 		["pen.html"] = "src/lua/html.lua",
 		-- ["lapis.http"] = "lapis/http.lua",
+		["pen.base.app"] = "src/lua/base/app.lua"
 		-- ["lapis.leda"] = "lapis/leda.lua",
 		-- ["lapis.leda.files"] = "lapis/leda/files.lua",
 		-- ["lapis.logging"] = "lapis/logging.lua",

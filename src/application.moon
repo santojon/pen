@@ -1,3 +1,6 @@
+-- The lapis app to override
+base_app = require "pen.base.app"
+
 -- Needed to creat an pen app
 pen = require "pen"
 
@@ -61,10 +64,20 @@ class App extends pen.Application
     render: "layouts.500", status: 500
 
 
-{
-  Request: Application.Request
+  -- 'Overrides' (just bypasses)
+  respond_to = base_app.respond_to
+  capture_errors = base_app.capture_errors
+  capture_errors_json = base_app.capture_errors_json
+  json_params = base_app.json_params
+  assert_error = base_app.assert_error
+  yield_error = base_app.yield_error
 
-  :Application, :respond_to
+
+
+{
+  Request: base_app.Application.Request
+
+  :App, :respond_to
   :capture_errors, :capture_errors_json
   :json_params, :assert_error, :yield_error
 }
