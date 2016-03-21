@@ -74,7 +74,7 @@ do
   local self = _class_0
   self:before_filter(function(self)
     if self.session.user then
-      self.__class.current_user = load_user(self.session.user)
+      self.current_user = load_user(self.session.user)
       generate_csrf(self)
     end
     if self.current_user then
@@ -86,6 +86,15 @@ do
       self.session.flash = false
     end
   end)
+  if controllerNames then
+    for _index_0 = 1, #controllerNames do
+      local val = controllerNames[_index_0]
+      self:include("controllers." .. tostring(val), {
+        path = tostring(base) .. "/" .. tostring(val),
+        name = tostring(val) .. "_"
+      })
+    end
+  end
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
