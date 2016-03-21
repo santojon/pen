@@ -1,5 +1,4 @@
 local pen = require("pen")
-local pen_base = require("pen.base")
 local util = require("pen.util")
 local encoding = require("pen.util.encoding")
 local json = require("cjson")
@@ -42,9 +41,6 @@ do
         render = "layouts.500",
         status = 500
       }
-    end,
-    app_base = function(self)
-      return pen_base
     end
   }
   _base_0.__index = _base_0

@@ -1,6 +1,5 @@
 -- Needed to creat an pen app
 pen = require "pen"
-pen_base = require "pen.base"
 
 -- Other things
 util = require "pen.util"
@@ -60,8 +59,3 @@ class App extends pen.Application
   -- Internal server error page
   [notFound: "#{base}/500"]: =>
     render: "layouts.500", status: 500
-
-
-  -- New methods to give
-  app_base: =>
-    pen_base
