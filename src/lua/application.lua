@@ -1,40 +1,15 @@
 local lapis = require("lapis")
+local base = ""
+local appName = "penapp"
+local controllerNames = { }
 local App
 do
   local _class_0
   local _parent_0 = lapis.Application
-  local self = _class_0
-  self.base = ""
-  self.appName = "penapp"
-  self.controllerNames = { }
-  self:before_filter(function(self)
-    if self.session.user then
-      self.current_user = load_user(self.session.user)
-      generate_csrf(self)
-    end
-    if self.current_user then
-      self.current_user:update_last_active()
-      self.global_notifications = self.current_user:unseen_notifications()
-    end
-    if self.session.flash then
-      self.flash = self.session.flash
-      self.session.flash = false
-    end
-  end)
-  if controllerNames then
-    local _list_0 = controllerNames
-    for _index_0 = 1, #_list_0 do
-      local val = _list_0[_index_0]
-      self:include("controllers." .. tostring(val), {
-        path = tostring(self.__class.base) .. "/" .. tostring(val),
-        name = tostring(val) .. "_"
-      })
-    end
-  end
   local _base_0 = {
     layout = require("views.layouts.main"),
     [{
-      denied = tostring(self.__class.base) .. "/403"
+      denied = tostring(base) .. "/403"
     }] = function(self)
       return {
         render = "layouts.403",
@@ -42,7 +17,7 @@ do
       }
     end,
     [{
-      notFound = tostring(self.__class.base) .. "/404"
+      notFound = tostring(base) .. "/404"
     }] = function(self)
       return {
         render = "layouts.404",
@@ -50,7 +25,7 @@ do
       }
     end,
     [{
-      notFound = tostring(self.__class.base) .. "/500"
+      notFound = tostring(base) .. "/500"
     }] = function(self)
       return {
         render = "layouts.500",
@@ -86,6 +61,30 @@ do
     end
   })
   _base_0.__class = _class_0
+  local self = _class_0
+  self:before_filter(function(self)
+    if self.session.user then
+      self.current_user = load_user(self.session.user)
+      generate_csrf(self)
+    end
+    if self.current_user then
+      self.current_user:update_last_active()
+      self.global_notifications = self.current_user:unseen_notifications()
+    end
+    if self.session.flash then
+      self.flash = self.session.flash
+      self.session.flash = false
+    end
+  end)
+  if controllerNames then
+    for _index_0 = 1, #controllerNames do
+      local val = controllerNames[_index_0]
+      self:include("controllers." .. tostring(val), {
+        path = tostring(base) .. "/" .. tostring(val),
+        name = tostring(val) .. "_"
+      })
+    end
+  end
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
