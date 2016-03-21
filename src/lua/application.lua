@@ -87,7 +87,7 @@ do
     end
     for _index_0 = 1, #controllerNames do
       local val = controllerNames[_index_0]
-      self.__class:include("pen.controllers." .. tostring(val), {
+      self.__class:include("controllers." .. tostring(val), {
         path = tostring(base) .. "/" .. tostring(val),
         name = tostring(val) .. "_"
       })
