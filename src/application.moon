@@ -2,7 +2,7 @@
 pen = require "pen"
 
 -- To use controllers
--- require "pen.controllers"
+require "pen.controllers"
 require "controllers"
 
 -- Other things
