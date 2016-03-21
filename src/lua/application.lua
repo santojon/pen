@@ -89,7 +89,7 @@ do
   if controllerNames then
     for _index_0 = 1, #controllerNames do
       local val = controllerNames[_index_0]
-      self:include("controllers." .. tostring(val), {
+      self:include("pen.controllers." .. tostring(val), {
         path = tostring(base) .. "/" .. tostring(val),
         name = tostring(val) .. "_"
       })
