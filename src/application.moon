@@ -9,7 +9,13 @@ lapis = require "lapis"
 --
 class App extends lapis.Application
 
-	-- Define main layout for all pages
+  -- App REQUIRED variables
+  -- SET IT into config.moon
+  @base = ""
+  @appName = "penapp"
+  @controllerNames = {}
+
+  -- Define main layout for all pages
   layout: require "views.layouts.main"
 
   -- Define a filter to run every time a request is made
@@ -27,8 +33,8 @@ class App extends lapis.Application
       @session.flash = false
 
   -- Subapplications includes (controllers)
-  if controllerNames
-  	@include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+  if @controllerNames != {}
+  	@include "controllers.#{val}", path: "#{@@base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 
@@ -38,13 +44,13 @@ class App extends lapis.Application
   --
 
   -- Denied page
-  [denied: "#{base}/403"]: =>
+  [denied: "#{@@base}/403"]: =>
     render: "layouts.403", status: 403
 
   -- Not found page
-  [notFound: "#{base}/404"]: =>
+  [notFound: "#{@@base}/404"]: =>
     render: "layouts.404", status: 404
 
   -- Internal server error page
-  [notFound: "#{base}/500"]: =>
+  [notFound: "#{@@base}/500"]: =>
     render: "layouts.500", status: 500
