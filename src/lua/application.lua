@@ -10,38 +10,7 @@ do
   local _class_0
   local _parent_0 = pen.Application
   local _base_0 = {
-    layout = require("views.layouts.main"),
-    [{
-      index = tostring(base) .. "/"
-    }] = function(self)
-      return {
-        render = true
-      }
-    end,
-    [{
-      denied = tostring(base) .. "/403"
-    }] = function(self)
-      return {
-        render = "layouts.403",
-        status = 403
-      }
-    end,
-    [{
-      notFound = tostring(base) .. "/404"
-    }] = function(self)
-      return {
-        render = "layouts.404",
-        status = 404
-      }
-    end,
-    [{
-      notFound = tostring(base) .. "/500"
-    }] = function(self)
-      return {
-        render = "layouts.500",
-        status = 500
-      }
-    end
+    layout = require("views.layouts.main")
   }
   _base_0.__index = _base_0
   setmetatable(_base_0, _parent_0.__base)
@@ -86,18 +55,56 @@ do
       self.session.flash = false
     end
   end)
-  if controllerNames then
-    for _index_0 = 1, #controllerNames do
-      local val = controllerNames[_index_0]
-      self:include("controllers." .. tostring(val), {
-        path = tostring(base) .. "/" .. tostring(val),
-        name = tostring(val) .. "_"
-      })
-    end
-  end
   if _parent_0.__inherited then
     _parent_0.__inherited(_parent_0, _class_0)
   end
   App = _class_0
-  return _class_0
+end
+if controllerNames then
+  for _index_0 = 1, #controllerNames do
+    local val = controllerNames[_index_0]
+    self:include("controllers." .. tostring(val), {
+      path = tostring(base) .. "/" .. tostring(val),
+      name = tostring(val) .. "_"
+    })
+  end
+  local _ = {
+    [{
+      index = tostring(base) .. "/"
+    }] = function(self)
+      return {
+        render = true
+      }
+    end
+  }
+  _ = {
+    [{
+      denied = tostring(base) .. "/403"
+    }] = function(self)
+      return {
+        render = "layouts.403",
+        status = 403
+      }
+    end
+  }
+  _ = {
+    [{
+      notFound = tostring(base) .. "/404"
+    }] = function(self)
+      return {
+        render = "layouts.404",
+        status = 404
+      }
+    end
+  }
+  return {
+    [{
+      notFound = tostring(base) .. "/500"
+    }] = function(self)
+      return {
+        render = "layouts.500",
+        status = 500
+      }
+    end
+  }
 end

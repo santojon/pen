@@ -1,4 +1,4 @@
--- Needed to creat an lapis app
+-- Needed to creat an pen app
 pen = require "pen"
 
 -- Other things
@@ -38,8 +38,8 @@ class App extends pen.Application
       @session.flash = false
 
   -- Subapplications includes (controllers)
-  if controllerNames
-  	@include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
+if controllerNames
+  @include "controllers.#{val}", path: "#{base}/#{val}", name: "#{val}_" for val in *controllerNames
 
   --
 
