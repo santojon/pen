@@ -59,3 +59,12 @@ class App extends pen.Application
   -- Internal server error page
   [notFound: "#{base}/500"]: =>
     render: "layouts.500", status: 500
+
+
+{
+  Request: Application.Request
+
+  :Application, :respond_to
+  :capture_errors, :capture_errors_json
+  :json_params, :assert_error, :yield_error
+}

@@ -90,5 +90,14 @@ do
     _parent_0.__inherited(_parent_0, _class_0)
   end
   App = _class_0
-  return _class_0
 end
+return {
+  Request = Application.Request,
+  Application = Application,
+  respond_to = respond_to,
+  capture_errors = capture_errors,
+  capture_errors_json = capture_errors_json,
+  json_params = json_params,
+  assert_error = assert_error,
+  yield_error = yield_error
+}
