@@ -72,18 +72,18 @@ do
   })
   _base_0.__class = _class_0
   local self = _class_0
-  self.__class:before_filter(function(self)
-    if self.__class.session.user then
-      self.__class.current_user = load_user(self.__class.session.user)
+  self:before_filter(function(self)
+    if self.session.user then
+      self.current_user = load_user(self.session.user)
       generate_csrf(self)
     end
-    if self.__class.current_user then
-      self.__class.current_user:update_last_active()
-      self.__class.global_notifications = self.__class.current_user:unseen_notifications()
+    if self.current_user then
+      self.current_user:update_last_active()
+      self.global_notifications = self.current_user:unseen_notifications()
     end
-    if self.__class.session.flash then
-      self.__class.flash = self.__class.session.flash
-      self.__class.session.flash = false
+    if self.session.flash then
+      self.flash = self.session.flash
+      self.session.flash = false
     end
   end)
   if controllerNames then
