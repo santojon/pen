@@ -11,9 +11,9 @@ class App extends lapis.Application
 
   -- App REQUIRED variables
   -- SET IT into config.moon
-  @base = ""
-  @appName = "penapp"
-  @controllerNames = {}
+  @base: ""
+  @appName: "penapp"
+  @controllerNames: {}
 
   -- Define main layout for all pages
   layout: require "views.layouts.main"
