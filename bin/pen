@@ -191,6 +191,35 @@ function newpen {
 	# TODO: [WIP] create MVC* structure
 }
 
+
+################
+# MIGRATE AREA #
+################
+
+function migrateDB {
+
+	# search for env
+	m=0
+	for i in "$@"
+	do
+		case $i in
+			*)
+				m=%m%+1
+			;;
+		esac
+	done
+
+	buildapp -c
+	cd $relativeHere
+
+	if [ "$m" != "1" ]; then
+		lapis migrate $2
+	else
+		lapis migrate
+	fi
+}
+
+
 ########
 # MAIN #
 ########
@@ -233,7 +262,7 @@ do
 			fi
 		;;
 		# kill app
-		kill)
+		kill|term)
 			killapp
 			for j in "$@"
 			do
@@ -248,6 +277,10 @@ do
 		# create a new app
 		new)
 			newpen $@
+		;;
+		# migrate / create database
+		migrate)
+			migrateDB $@
 		;;
 		# compile modules
 		compile)
