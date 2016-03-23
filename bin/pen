@@ -110,8 +110,8 @@ function compilePen {
 	case $1 in
 		-c|--clean)
 			cleanapp
-			cd $relativeHere/src/
-			moonc -t lua ./*
+			cd $relativeHere/src/moon/
+			moonc -t ../lua ./*
 		;;
 	esac
 }
