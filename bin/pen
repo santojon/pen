@@ -194,9 +194,9 @@ function migrateDB {
 	cd $relativeHere
 
 	if [ "$m" != "1" ]; then
-		lapis migrate $2
+		lapis migrate $2 --trace
 	else
-		lapis migrate
+		lapis migrate --trace
 	fi
 }
 
