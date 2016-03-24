@@ -72,7 +72,7 @@ function buildapp {
 
 	# copy other necessary files
 	echo "Copying necessary files..."
-	sudo cp -r $relativeHere/* target
+	sudo cp -r $relativeHere target
 
 	# go into folder
 	cd target
@@ -126,7 +126,7 @@ function runapp {
 
 	# run project
 	echo "Starting server..."
-	cd ../target && lapis server $e & clear
+	cd ../target/$relativeHere && lapis server $e & clear
 }
 
 
