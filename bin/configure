@@ -11,9 +11,9 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # create dir and copy file
-chmod 777 pen
+sudo chmod 777 pen
 # sudo mkdir -p /usr/local/bin/pen/
-cp -r pen /usr/local/bin/
+sudo cp -r pen /usr/local/bin/
 # sudo chmod 777 /usr/local/bin/pen/
 # sudo ln -sf /usr/share/lua/5.1/lapis /usr/share/lua/5.1/pen/lapis
 
