@@ -1,0 +1,287 @@
+#!/bin/bash
+
+export here="$PWD"
+IFS='/' read -ra hereParts <<< "$here"
+partsSize="${#hereParts[@]}"
+export relativeHere="${hereParts[partsSize - 1]}"
+
+
+################
+# CLEANUP AREA #
+################
+
+function cleanapp {
+
+	# go to project root
+	cd ../
+
+	# remove all 'target' folders
+	echo "Starting cleanup..."
+	find . -type d -name 'target' -exec rm -rf {} 2> /dev/null \;
+
+	# remove all 'lua' folders
+	find . -type d -name 'lua' -exec rm -rf {} 2> /dev/null \;
+
+	# remove all 'lua' files
+	find . -name '*.lua' -exec rm -rf {} 2> /dev/null \;
+
+	# remove all 'logs' folders
+	find . -type d -name 'logs' -exec rm -rf {} 2> /dev/null \;
+
+	# remove nginx compiled conf files
+	find . -name '*.conf.compiled' -exec rm -rf {} 2> /dev/null \;
+
+	# removing trash folders
+	find . -type d -name '*Trash*' -exec rm -rf {} 2> /dev/null \;
+
+	# remove all empty folders
+	find . -type d -empty -delete
+	echo "Done!"
+	clear
+}
+
+
+##############
+# BUILD AREA #
+##############
+
+function buildapp {
+
+	# verifies if you need to clean or watch app
+	for i in "$@"
+	do
+		case $i in
+			-c|--clean)
+				cleanapp
+				c="0"
+			;;
+			-w|--watch)
+				w="0"
+			;;
+		esac
+	done
+
+	if [ "$c" != "0" ]; then
+		# go to project root
+		cd ../
+	fi
+
+	# create 'target' folder
+	echo "creating folder..."
+	mkdir -p target
+
+	# copy other necessary files
+	echo "Copying necessary files..."
+	cp -r $relativeHere target
+
+	# go into folder
+	cd target
+
+	# build all files and watch then
+	echo "Start building..."
+	find . -name '*.moon' -exec moonc {} \;
+	echo "All done!"
+
+	##########################
+	# POSTBUILD CLEANUP AREA #
+	##########################
+
+	# remove all 'moon' files
+	echo "Cleaning build up..."
+	find . -name '*.moon' -exec rm -rf {} \;
+	echo "Done."
+
+	if [ "$w" == "0" ]; then
+		# watch the app changes
+		watchapp &
+	fi
+}
+
+
+##############
+# WATCH AREA #
+##############
+
+function watchapp {
+
+	# set watcher for moon files
+	cd ../
+	moonc -w -t target $relativeHere & clear
+}
+
+
+#############
+# RUN AREA #
+#############
+
+function runapp {
+
+	# verify environment
+	e="development"
+	case $2 in
+		production)
+			e="production"
+		;;
+	esac
+
+	# run project
+	echo "Starting server..."
+	cd ../target/$relativeHere && lapis server $e & clear
+}
+
+
+#############
+# KILL AREA #
+#############
+
+function killapp {
+
+	# kill existing related processes
+	echo "Killing processes..."
+	killall -r nginx
+	killall -r lua
+	echo "Done."
+}
+
+
+#####################
+# 'CREATE NEW' AREA #
+#####################
+
+function newpen {
+
+	# search for '--git' option
+	for i in "$@"
+	do
+		case $i in
+			--git)
+				lapis new --git
+				g="0"
+			;;
+		esac
+	done
+
+	# if not '--git'
+	if [ "$g" != "0" ]; then
+		lapis new
+	fi
+
+	# create necessary dirs
+	mkdir -p ./{models,views/layouts,controllers,i18n}
+
+	# TODO: [WIP] create MVC* structure
+}
+
+
+################
+# MIGRATE AREA #
+################
+
+function migrateDB {
+
+	# search for env
+	m=0
+	for i in "$@"
+	do
+		case $i in
+			*)
+				m=%m%+1
+			;;
+		esac
+	done
+
+	buildapp -c
+	cd $relativeHere
+
+	if [ "$m" != "1" ]; then
+		lapis migrate $2 --trace
+	else
+		lapis migrate --trace
+	fi
+}
+
+
+##########################
+# COMPILE PEN FILES AREA #
+##########################
+
+function compilePen {
+	case $1 in
+		-c|--clean)
+			cleanapp
+			cd $relativeHere/src/moon/
+			moonc -t ../lua ./*
+		;;
+	esac
+}
+
+
+
+########
+# MAIN #
+########
+
+for i in "$@"
+do
+	case $i in
+		# make a cleanup
+		clean)
+			cleanapp
+		;;
+		# build app
+		build)
+			buildapp  $@
+		;;
+		# run app
+		run|server)
+			for j in "$@"
+			do
+				# verifies if is flagged to full 'dev' mode
+				case $j in
+					-d|--dev)
+						buildapp -c -w
+						runapp
+						default="0"
+					;;
+					# verifies if is flagged to full 'prod' mode
+					-p|--prod)
+						buildapp -c
+						runapp . "production"
+						default="0"
+					;;
+				esac
+			done
+
+			# otherwise... just pass the params
+			if [ "$default" != "0" ]; then
+				buildapp $@
+				runapp $@
+			fi
+		;;
+		# kill app
+		kill|term)
+			killapp
+			for j in "$@"
+			do
+				# clean too?
+				case $j in
+					-c|--clean)
+						cleanapp
+					;;
+				esac
+			done
+		;;
+		# create a new app
+		new)
+			newpen $@
+		;;
+		# migrate / create database
+		migrate)
+			migrateDB $@
+		;;
+		# compile modules
+		compile)
+			compilePen -c
+		;;
+	esac
+done
