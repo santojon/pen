@@ -103,10 +103,41 @@ function buildapp {
 ##############
 
 function watchapp {
+	export -f watchfile
+
+	sudo find . -name '*.css' -exec bash -c `watchfile "$0"` {} \; &
+
+	sudo find . -name '*.js' -exec bash -c `watchfile "$0"` {} \; &
+
+	sudo find . -name '*.html' -exec bash -c `watchfile "$0"` {} \; &
+
+	watchfile $here/assets/css/custom.css &
 
 	# set watcher for moon files
 	cd ../
 	moonc -w -t target $relativeHere & clear
+}
+
+
+function watchfile {
+	f="$1"
+	last=`md5sum "$f"`
+
+	IFS="$here" read -ra fParts <<< "$f"
+	echo "$fParts"
+
+	while [[ true ]]; do
+		sleep 1
+		new=`md5sum "$f"`
+
+		if [[ "$new" != "$last" ]]; then
+			
+			echo "$f --> $here/../target/$relativeHere"
+			cp -r $f $here/../target/$relativeHere/
+
+			last="$new"
+		fi
+	done
 }
 
 
@@ -140,6 +171,7 @@ function killapp {
 	echo "Killing processes..."
 	sudo killall -r nginx
 	sudo killall -r lua
+	sudo killall -r pen
 	echo "Done."
 }
 
@@ -150,21 +182,20 @@ function killapp {
 
 function newpen {
 
-	# search for '--git' option
+	# search for '--git' option and '--tup' option
 	for i in "$@"
 	do
 		case $i in
 			--git)
-				lapis new --git
-				g="0"
+				g="--git"
+			;;
+			--tup)
+				t="--tup"
 			;;
 		esac
 	done
 
-	# if not '--git'
-	if [ "$g" != "0" ]; then
-		lapis new
-	fi
+	lapis new $g $t
 
 	# create necessary dirs
 	sudo mkdir -p ./{models,views/layouts,controllers,i18n}
