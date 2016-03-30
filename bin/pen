@@ -157,7 +157,7 @@ function runapp {
 
 	# run project
 	echo "Starting server..."
-	cd ../target/$relativeHere && lapis server $e & clear
+	cd ../target/$relativeHere && lapis server $e --trace & clear
 }
 
 
